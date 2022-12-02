@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Вход</title>
+	<link rel="stylesheet" href="static/css/auth_error.css">
+	<style>
+   .error {
+    color: red;
+    font-size: 100%;
+   }
+   p {
+    color: rgb(200, 0, 0);
+    line-height: 2;
+   }
+
+
+  </style>
+</head>
+<body>
+
+	<div class="form">
+		<h1>Вход</h1>
+		<div class="input-form">
+			<input type="text" name="login1" placeholder="Логин" form="auth_error_auth"/>
+		</div>
+		<div class="input-form">
+			<input type="text"  name="password1" placeholder="Пароль" form="auth_error_auth"/>
+		</div>
+<a href="home">
+            <div class="input-form" >
+				<span class="error">Неправильный логин или пароль
+
+			<form id = "auth_error_auth" action="/auth" method="POST">
+   				<button name="Goto" value="Goto" >Войти</button>
+				<h6>
+
+				</h6>
+			</form>
+			<form id = "auth_error_reg" action="/reg" method="GET">
+   				<button name="Goto" value="Goto" >Регистрация</button>
+
+			</form>
+				</span>
+		    </div>
+
+
+</body>
+</html>
