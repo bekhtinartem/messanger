@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Регистрация</title>
+	<link rel="stylesheet" href="static/css/auth.css">
+	<style>
+   .error {
+    color: red;
+    font-size: 100%;
+   }
+   p {
+    color: rgb(200, 0, 0);
+    line-height: 2;
+   }
+
+
+  </style>
+</head>
+<body>
+
+	<div class="form">
+		<h1>Регистрация</h1>
+		<div class="input-form">
+			<input type="text" placeholder="Логин" name="login" form="form_reg"/>
+
+		</div>
+		<div class="input-form">
+			<input type="password" placeholder="Пароль" name="password" form="form_reg"/>
+		</div>
+        <a href="home">
+			<span class="error">Придумайте логин</span>
+            <div class="input-form" >
+				<form id = "form_reg" action="/reg" method="POST">
+
+   				<button name="registration" value="Goto" >Завершить регистрацию</button>
+			</form>
+		    </div>
+	</div>
+
+</body>
+</html>
