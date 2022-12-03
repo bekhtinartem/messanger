@@ -58,12 +58,17 @@ def home():
 @app.route('/home/mes', methods=["POST", "GET"])
 def mes():
     if request.method == "GET":
-        token = request.args.get('token')
-        login = request.args.get('login')
+        code=request.args.get("code")
+        print(code)
+        login, token=code.split("&token=")
+        print('-'*100)
+        print(login)
+        print(token)
+        print('-'*100)
         users=DataBase.get_connections(login, token)
         for user in users:
             print(DataBase.get_messages(login, user, token, 1))
-        return render_template("some_file.html")
+        return render_template("mes.html")
     return redirect('/auth')
 
 
