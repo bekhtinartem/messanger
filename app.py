@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect
 from flask import request
 from Blockchain import Blockchain
+from bs4 import BeautifulSoup
 app = Flask(__name__)
 DataBase=Blockchain()
 
@@ -11,7 +12,7 @@ def do_auth():
         password=request.form["password1"]
         token=DataBase.sign_in(login=login, password=password)
         if token!=None:
-            return redirect('home?token='+token)
+            return redirect('home?login='+login+'&token='+token)
         else:
             return render_template('auth_error.html')
 
@@ -30,7 +31,7 @@ def do_reg():
             return render_template('reg_error2.html')
         token=DataBase.create_user(login=login, password=password)
         if token!=None:
-            return redirect('home?token='+token)
+            return redirect('home?login='+login+'&token='+token)
         else:
             return render_template('reg_error1.html')
 
@@ -47,14 +48,23 @@ def auth():
 def home():
     if request.method=="GET":
         token=request.args.get('token')
-        if token!=None:
+        login = request.args.get('login')
+        if token!=None and login!=None:
             return render_template('home.html')
     return render_template("auth.html")
 
 
-@app.route('/home/mes')
+@app.route('/home/mes', methods=["POST", "GET"])
 def mes():
-    return render_template("mes.html")
+    if request.method == "GET":
+        token = request.args.get('token')
+        login = request.args.get('login')
+        users=DataBase.get_connections(login, token)
+        for user in users:
+            print(DataBase.get_messages(login, user, token, 1))
+        return render_template("some_file.html")
+    return redirect('/auth')
+
 
 if __name__ == "__main__":
     app.run(debug=True)

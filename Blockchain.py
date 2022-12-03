@@ -417,3 +417,28 @@ class Blockchain(object):
         fern = Fernet(key)
         conn = fern.decrypt(conn.encode('utf-8')).decode('utf-8')
         return json.JSONDecoder().decode(conn)["users"]
+
+    def is_exist(self, login, token):
+        log_hash=hashlib.sha256(login.encode('utf-8')).hexdigest()
+        if not(os.path.exists(self.users+"/"+log_hash+".block")):
+            return False
+        try:
+            kdf = PBKDF2HMAC(
+                algorithm=hashes.SHA256(),
+                length=32,
+                salt=self.salt,
+                iterations=100000,
+                backend=backend
+            )
+            key = base64.urlsafe_b64encode(kdf.derive(bytes(token, encoding='utf-8')))
+            fern = Fernet(key)
+            f=open(self.users+"/"+log_hash+".block")
+            data=f.read()
+            f.close()
+            data=fern.decrypt(data.encode('utf-8')).decode('utf-8')
+            data=json.JSONDecoder().decode(data)
+            if data["token"]==token:
+                return True
+            return False
+        except Exception as e:
+            return False
