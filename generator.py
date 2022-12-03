@@ -21,14 +21,15 @@ def mes_page(DataBase, login, token):
     container=soup.find(id="messeges_container")
     for user in users:
         message=DataBase.get_messages(login, user, token, 1)
-        upper_tag =  BeautifulSoup('<p class="card">')
-        div_tag = soup.new_tag('div')# class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0"')
+        upper_tag =  BeautifulSoup('<p >')
+        div_tag = soup.new_tag('nav class="navbar navbar-light sticky-top bg-light flex-md-nowrap p-0"')
         p_tag = soup.new_tag('p align="left" class="navbar-brand  mr-15"')
         log_tag=BeautifulSoup("<h3>"+user+"</h3>")
         tag=BeautifulSoup('<img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar" class="rounded-circle img-fluid" style="width: 80px;">')
         tag.name="image"
         tag.src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
         p_tag.append(log_tag)
+        div_tag.append(tag)
         div_tag.append(p_tag)
         upper_tag.append(div_tag)
         string = '<form id = "message_'+user+'" action="/home/mes' + '" method="GET" id="home_to_messages"><button name="code" value=' + login + '&token=' + token + '>'+message[0]["message"]+'</button></form>'
