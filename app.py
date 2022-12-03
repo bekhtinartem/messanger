@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect
 from flask import request
 from Blockchain import Blockchain
-from bs4 import BeautifulSoup
+import generator
 app = Flask(__name__)
 DataBase=Blockchain()
 
@@ -50,7 +50,8 @@ def home():
         token=request.args.get('token')
         login = request.args.get('login')
         if token!=None and login!=None:
-            return render_template('home.html')
+            page=generator.user_page(DataBase, login, token)
+            return render_template("home.html")
     return render_template("auth.html")
 
 
