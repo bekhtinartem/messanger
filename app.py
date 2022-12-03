@@ -61,13 +61,9 @@ def mes():
         code=request.args.get("code")
         print(code)
         login, token=code.split("&token=")
-        print('-'*100)
-        print(login)
-        print(token)
-        print('-'*100)
-        users=DataBase.get_connections(login, token)
-        for user in users:
-            print(DataBase.get_messages(login, user, token, 1))
+        if not(DataBase.is_exist(login, token)):
+            return
+        generator.mes_page(DataBase, login, token)
         return render_template("mes.html")
     return redirect('/auth')
 
